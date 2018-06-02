@@ -1,0 +1,44 @@
+server:
+  port: 8082
+  servlet:
+      context-path: /wzool
+      session:
+        timeout: 3600s
+spring:
+  datasource:
+    name: WZool
+    url: jdbc://mysql://127.0.0.1:3036/zool
+    username: root
+    password: root
+    #使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initial-size: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+#  redis:
+#     database: 0
+#     host: 192.168.1.138
+#     password: root
+#     port: 6379
+#     timeout: 3000ms
+#     jedis:
+#       pool:
+#             max-idle: 500
+#             min-idle: 50
+#             max-active: 2000
+#             max-wait: 1000ms
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.fworldcodez.wzool.pojo
+

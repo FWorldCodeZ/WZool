@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fworldcodez.wzool.dao.AnimalsMapper" >
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.Animals" >
+    <id column="an_id" property="anId" jdbcType="INTEGER" />
+    <result column="an_name" property="anName" jdbcType="VARCHAR" />
+    <result column="an_description" property="anDescription" jdbcType="VARCHAR" />
+    <result column="an_age" property="anAge" jdbcType="VARCHAR" />
+    <result column="an_type" property="anType" jdbcType="VARCHAR" />
+    <result column="an_price" property="anPrice" jdbcType="DECIMAL" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    an_id, an_name, an_description, an_age, an_type, an_price, url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from animals
+    where an_id = #{anId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from animals
+    where an_id = #{anId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Animals" >
+    insert into animals (an_id, an_name, an_description, 
+      an_age, an_type, an_price, 
+      url)
+    values (#{anId,jdbcType=INTEGER}, #{anName,jdbcType=VARCHAR}, #{anDescription,jdbcType=VARCHAR}, 
+      #{anAge,jdbcType=VARCHAR}, #{anType,jdbcType=VARCHAR}, #{anPrice,jdbcType=DECIMAL}, 
+      #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.Animals" >
+    insert into animals
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="anId != null" >
+        an_id,
+      </if>
+      <if test="anName != null" >
+        an_name,
+      </if>
+      <if test="anDescription != null" >
+        an_description,
+      </if>
+      <if test="anAge != null" >
+        an_age,
+      </if>
+      <if test="anType != null" >
+        an_type,
+      </if>
+      <if test="anPrice != null" >
+        an_price,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="anId != null" >
+        #{anId,jdbcType=INTEGER},
+      </if>
+      <if test="anName != null" >
+        #{anName,jdbcType=VARCHAR},
+      </if>
+      <if test="anDescription != null" >
+        #{anDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="anAge != null" >
+        #{anAge,jdbcType=VARCHAR},
+      </if>
+      <if test="anType != null" >
+        #{anType,jdbcType=VARCHAR},
+      </if>
+      <if test="anPrice != null" >
+        #{anPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.Animals" >
+    update animals
+    <set >
+      <if test="anName != null" >
+        an_name = #{anName,jdbcType=VARCHAR},
+      </if>
+      <if test="anDescription != null" >
+        an_description = #{anDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="anAge != null" >
+        an_age = #{anAge,jdbcType=VARCHAR},
+      </if>
+      <if test="anType != null" >
+        an_type = #{anType,jdbcType=VARCHAR},
+      </if>
+      <if test="anPrice != null" >
+        an_price = #{anPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where an_id = #{anId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.Animals" >
+    update animals
+    set an_name = #{anName,jdbcType=VARCHAR},
+      an_description = #{anDescription,jdbcType=VARCHAR},
+      an_age = #{anAge,jdbcType=VARCHAR},
+      an_type = #{anType,jdbcType=VARCHAR},
+      an_price = #{anPrice,jdbcType=DECIMAL},
+      url = #{url,jdbcType=VARCHAR}
+    where an_id = #{anId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fworldcodez.wzool.dao.AnimalsPhotosMapper" >
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.AnimalsPhotos" >
+    <id column="an_photo_id" property="anPhotoId" jdbcType="INTEGER" />
+    <result column="an_id" property="anId" jdbcType="INTEGER" />
+    <result column="photos_name" property="photosName" jdbcType="VARCHAR" />
+    <result column="an_photos" property="anPhotos" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    an_photo_id, an_id, photos_name, an_photos
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from animals_photos
+    where an_photo_id = #{anPhotoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from animals_photos
+    where an_photo_id = #{anPhotoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.AnimalsPhotos" >
+    insert into animals_photos (an_photo_id, an_id, photos_name, 
+      an_photos)
+    values (#{anPhotoId,jdbcType=INTEGER}, #{anId,jdbcType=INTEGER}, #{photosName,jdbcType=VARCHAR}, 
+      #{anPhotos,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.AnimalsPhotos" >
+    insert into animals_photos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="anPhotoId != null" >
+        an_photo_id,
+      </if>
+      <if test="anId != null" >
+        an_id,
+      </if>
+      <if test="photosName != null" >
+        photos_name,
+      </if>
+      <if test="anPhotos != null" >
+        an_photos,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="anPhotoId != null" >
+        #{anPhotoId,jdbcType=INTEGER},
+      </if>
+      <if test="anId != null" >
+        #{anId,jdbcType=INTEGER},
+      </if>
+      <if test="photosName != null" >
+        #{photosName,jdbcType=VARCHAR},
+      </if>
+      <if test="anPhotos != null" >
+        #{anPhotos,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.AnimalsPhotos" >
+    update animals_photos
+    <set >
+      <if test="anId != null" >
+        an_id = #{anId,jdbcType=INTEGER},
+      </if>
+      <if test="photosName != null" >
+        photos_name = #{photosName,jdbcType=VARCHAR},
+      </if>
+      <if test="anPhotos != null" >
+        an_photos = #{anPhotos,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where an_photo_id = #{anPhotoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.AnimalsPhotos" >
+    update animals_photos
+    set an_id = #{anId,jdbcType=INTEGER},
+      photos_name = #{photosName,jdbcType=VARCHAR},
+      an_photos = #{anPhotos,jdbcType=VARCHAR}
+    where an_photo_id = #{anPhotoId,jdbcType=INTEGER}
+  </update>
+</mapper>

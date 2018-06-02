@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fworldcodez.wzool.dao.PermissionsMapper">
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.Permissions">
+    <id column="per_id" jdbcType="INTEGER" property="perId" />
+    <result column="per_name" jdbcType="VARCHAR" property="perName" />
+    <result column="per_code" jdbcType="VARCHAR" property="perCode" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="parent_code" jdbcType="INTEGER" property="parentCode" />
+    <result column="child_code" jdbcType="INTEGER" property="childCode" />
+    <result column="available" jdbcType="BIT" property="available" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="sort_description" jdbcType="VARCHAR" property="sortDescription" />
+    <result column="orgunit_id" jdbcType="INTEGER" property="orgunitId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    per_id, per_name, per_code, url, parent_code, child_code, available, level, sort_description, 
+    orgunit_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permissions
+    where per_id = #{perId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from permissions
+    where per_id = #{perId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Permissions">
+    insert into permissions (per_id, per_name, per_code, 
+      url, parent_code, child_code, 
+      available, level, sort_description, 
+      orgunit_id)
+    values (#{perId,jdbcType=INTEGER}, #{perName,jdbcType=VARCHAR}, #{perCode,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{parentCode,jdbcType=INTEGER}, #{childCode,jdbcType=INTEGER}, 
+      #{available,jdbcType=BIT}, #{level,jdbcType=INTEGER}, #{sortDescription,jdbcType=VARCHAR}, 
+      #{orgunitId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.Permissions">
+    insert into permissions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="perId != null">
+        per_id,
+      </if>
+      <if test="perName != null">
+        per_name,
+      </if>
+      <if test="perCode != null">
+        per_code,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="parentCode != null">
+        parent_code,
+      </if>
+      <if test="childCode != null">
+        child_code,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="sortDescription != null">
+        sort_description,
+      </if>
+      <if test="orgunitId != null">
+        orgunit_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="perId != null">
+        #{perId,jdbcType=INTEGER},
+      </if>
+      <if test="perName != null">
+        #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="perCode != null">
+        #{perCode,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=INTEGER},
+      </if>
+      <if test="childCode != null">
+        #{childCode,jdbcType=INTEGER},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=BIT},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="sortDescription != null">
+        #{sortDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="orgunitId != null">
+        #{orgunitId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.Permissions">
+    update permissions
+    <set>
+      <if test="perName != null">
+        per_name = #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="perCode != null">
+        per_code = #{perCode,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        parent_code = #{parentCode,jdbcType=INTEGER},
+      </if>
+      <if test="childCode != null">
+        child_code = #{childCode,jdbcType=INTEGER},
+      </if>
+      <if test="available != null">
+        available = #{available,jdbcType=BIT},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="sortDescription != null">
+        sort_description = #{sortDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="orgunitId != null">
+        orgunit_id = #{orgunitId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where per_id = #{perId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.Permissions">
+    update permissions
+    set per_name = #{perName,jdbcType=VARCHAR},
+      per_code = #{perCode,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=INTEGER},
+      child_code = #{childCode,jdbcType=INTEGER},
+      available = #{available,jdbcType=BIT},
+      level = #{level,jdbcType=INTEGER},
+      sort_description = #{sortDescription,jdbcType=VARCHAR},
+      orgunit_id = #{orgunitId,jdbcType=INTEGER}
+    where per_id = #{perId,jdbcType=INTEGER}
+  </update>
+</mapper>

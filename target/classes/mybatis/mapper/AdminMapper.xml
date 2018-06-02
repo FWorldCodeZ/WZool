@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fworldcodez.wzool.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.Admin" >
+    <id column="_id" property="id" jdbcType="INTEGER" />
+    <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="admin_pass_word" property="adminPassWord" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_time" property="lastTime" jdbcType="TIMESTAMP" />
+    <result column="orgunit_id" property="orgunitId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    _id, admin_name, account, admin_pass_word, salt, state, address, phone, email, create_time, 
+    last_time, orgunit_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where _id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where _id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Admin" >
+    insert into admin (_id, admin_name, account, 
+      admin_pass_word, salt, state, 
+      address, phone, email, 
+      create_time, last_time, orgunit_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{adminPassWord,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastTime,jdbcType=TIMESTAMP}, #{orgunitId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        _id,
+      </if>
+      <if test="adminName != null" >
+        admin_name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="adminPassWord != null" >
+        admin_pass_word,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastTime != null" >
+        last_time,
+      </if>
+      <if test="orgunitId != null" >
+        orgunit_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adminName != null" >
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPassWord != null" >
+        #{adminPassWord,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null" >
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgunitId != null" >
+        #{orgunitId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.Admin" >
+    update admin
+    <set >
+      <if test="adminName != null" >
+        admin_name = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPassWord != null" >
+        admin_pass_word = #{adminPassWord,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null" >
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgunitId != null" >
+        orgunit_id = #{orgunitId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where _id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.Admin" >
+    update admin
+    set admin_name = #{adminName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      admin_pass_word = #{adminPassWord,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      orgunit_id = #{orgunitId,jdbcType=INTEGER}
+    where _id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

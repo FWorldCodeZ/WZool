@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fworldcodez.wzool.dao.UserCommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.UserComments" >
+    <id column="_id" property="id" jdbcType="INTEGER" />
+    <result column="zool_id" property="zoolId" jdbcType="INTEGER" />
+    <result column="ad_id" property="adId" jdbcType="INTEGER" />
+    <result column="is_admin" property="isAdmin" jdbcType="BIT" />
+    <result column="com_id" property="comId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    _id, zool_id, ad_id, is_admin, com_id, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_comments
+    where _id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_comments
+    where _id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.UserComments" >
+    insert into user_comments (_id, zool_id, ad_id, 
+      is_admin, com_id, state)
+    values (#{id,jdbcType=INTEGER}, #{zoolId,jdbcType=INTEGER}, #{adId,jdbcType=INTEGER}, 
+      #{isAdmin,jdbcType=BIT}, #{comId,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.UserComments" >
+    insert into user_comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        _id,
+      </if>
+      <if test="zoolId != null" >
+        zool_id,
+      </if>
+      <if test="adId != null" >
+        ad_id,
+      </if>
+      <if test="isAdmin != null" >
+        is_admin,
+      </if>
+      <if test="comId != null" >
+        com_id,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="zoolId != null" >
+        #{zoolId,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null" >
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="isAdmin != null" >
+        #{isAdmin,jdbcType=BIT},
+      </if>
+      <if test="comId != null" >
+        #{comId,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.UserComments" >
+    update user_comments
+    <set >
+      <if test="zoolId != null" >
+        zool_id = #{zoolId,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null" >
+        ad_id = #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="isAdmin != null" >
+        is_admin = #{isAdmin,jdbcType=BIT},
+      </if>
+      <if test="comId != null" >
+        com_id = #{comId,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where _id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.UserComments" >
+    update user_comments
+    set zool_id = #{zoolId,jdbcType=INTEGER},
+      ad_id = #{adId,jdbcType=INTEGER},
+      is_admin = #{isAdmin,jdbcType=BIT},
+      com_id = #{comId,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR}
+    where _id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fworldcodez.wzool.dao.CommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.Comments" >
+    <id column="com_id" property="comId" jdbcType="INTEGER" />
+    <result column="com_details" property="comDetails" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    com_id, com_details, creat_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comments
+    where com_id = #{comId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comments
+    where com_id = #{comId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Comments" >
+    insert into comments (com_id, com_details, creat_time
+      )
+    values (#{comId,jdbcType=INTEGER}, #{comDetails,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.Comments" >
+    insert into comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        com_id,
+      </if>
+      <if test="comDetails != null" >
+        com_details,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        #{comId,jdbcType=INTEGER},
+      </if>
+      <if test="comDetails != null" >
+        #{comDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.Comments" >
+    update comments
+    <set >
+      <if test="comDetails != null" >
+        com_details = #{comDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where com_id = #{comId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.Comments" >
+    update comments
+    set com_details = #{comDetails,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP}
+    where com_id = #{comId,jdbcType=INTEGER}
+  </update>
+</mapper>
