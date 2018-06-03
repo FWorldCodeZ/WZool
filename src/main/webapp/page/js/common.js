@@ -1,7 +1,7 @@
-// $(load());
+
 // function load() {
-//     $("#top").load("top.html");
-//     $("#foot").load("foot.html");
+//     $(".top").load("top.html");
+//     $(".foot").load("foot.html");
 // }
 
 //公共路径
