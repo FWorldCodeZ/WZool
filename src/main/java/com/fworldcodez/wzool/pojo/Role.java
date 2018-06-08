@@ -1,5 +1,7 @@
 package com.fworldcodez.wzool.pojo;
 
+import java.util.List;
+
 public class Role {
     private Integer roleId;
 
@@ -10,6 +12,28 @@ public class Role {
     private Boolean available;
 
     private Integer orgunitId;
+
+    private List<Permissions> permissionList;// 一个角色对应多个权限
+
+    private List<User> userList;// 一个角色对应多个用户
+
+    public List<Permissions> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permissions> permissionList) {
+        this.permissionList = permissionList;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+
 
     public Integer getRoleId() {
         return roleId;

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fworldcodez.wzool.dao.UserCollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.UserCollection" >
+    <id column="coll_id" property="collId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="other_id" property="otherId" jdbcType="INTEGER" />
+    <result column="coll_type" property="collType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    coll_id, user_id, other_id, coll_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_collection
+    where coll_id = #{collId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_collection
+    where coll_id = #{collId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.UserCollection" >
+    insert into user_collection (coll_id, user_id, other_id, 
+      coll_type)
+    values (#{collId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{otherId,jdbcType=INTEGER}, 
+      #{collType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.UserCollection" >
+    insert into user_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collId != null" >
+        coll_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="otherId != null" >
+        other_id,
+      </if>
+      <if test="collType != null" >
+        coll_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collId != null" >
+        #{collId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="otherId != null" >
+        #{otherId,jdbcType=INTEGER},
+      </if>
+      <if test="collType != null" >
+        #{collType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.UserCollection" >
+    update user_collection
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="otherId != null" >
+        other_id = #{otherId,jdbcType=INTEGER},
+      </if>
+      <if test="collType != null" >
+        coll_type = #{collType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where coll_id = #{collId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.UserCollection" >
+    update user_collection
+    set user_id = #{userId,jdbcType=INTEGER},
+      other_id = #{otherId,jdbcType=INTEGER},
+      coll_type = #{collType,jdbcType=VARCHAR}
+    where coll_id = #{collId,jdbcType=INTEGER}
+  </update>
+</mapper>

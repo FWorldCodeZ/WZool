@@ -1,6 +1,7 @@
 package com.fworldcodez.wzool.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
     private Integer id;
@@ -26,6 +27,16 @@ public class User {
     private Date lastTime;
 
     private Integer orgunitId;
+
+    private List<Role> roleList;// 一个用户具有多个角色
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     public Integer getId() {
         return id;

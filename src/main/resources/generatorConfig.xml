@@ -41,6 +41,14 @@
                <!--enableDeleteByExample="false"-->
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false"/>-->
+        <table tableName="user_collection"
+               domainObjectName="UserCollection"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
         <!--<table tableName="admin_role"-->
                <!--domainObjectName="AdminRole"-->
                <!--enableCountByExample="false"-->

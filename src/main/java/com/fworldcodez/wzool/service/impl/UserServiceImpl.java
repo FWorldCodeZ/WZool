@@ -1,5 +1,6 @@
 package com.fworldcodez.wzool.service.impl;
 
+import com.fworldcodez.wzool.common.JsonResult;
 import com.fworldcodez.wzool.common.Md5Util;
 import com.fworldcodez.wzool.dao.UserMapper;
 import com.fworldcodez.wzool.dto.UserDto;
@@ -43,5 +44,16 @@ public class UserServiceImpl implements UserService {
         } else {
             return null;
         }
+    }
+/**
+ * @Descripation 注册
+ * @param UserDto
+ * return json
+ * */
+    @Override
+    public JsonResult register(UserDto userDto) {
+        JsonResult jsonResult=new JsonResult();
+        
+        return null;
     }
 }

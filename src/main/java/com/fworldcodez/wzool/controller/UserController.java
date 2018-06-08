@@ -10,6 +10,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,7 +54,7 @@ public class UserController {
             jsonResult.setMsg("登录成功！");
             return jsonResult;
         }
-       //注入
+        //注入
         UserDto userDto = new UserDto();
         userDto.setUserName(userName);
         userDto.setUserPassWord(userPassWord);
@@ -76,4 +77,16 @@ public class UserController {
         return jsonResult;
     }
 
+    /**
+     * @param
+     * @Author FWorldCodeZ
+     * @Description 注册判断是否为空
+     */
+    @RequestMapping("/register")
+    @ResponseBody
+    public JsonResult register(@RequestBody UserDto userDto
+            , HttpServletRequest request) {
+        jsonResult=new JsonResult();
+        return null;
+    }
 }

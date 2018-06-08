@@ -1,122 +1,176 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fworldcodez.wzool.dao.ZoolsMapper" >
-  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.Zools" >
-    <id column="zool_id" property="zoolId" jdbcType="INTEGER" />
-    <result column="zool_description" property="zoolDescription" jdbcType="VARCHAR" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="emial" property="emial" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="start_level" property="startLevel" jdbcType="VARCHAR" />
-    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    zool_id, zool_description, url, address, emial, type, start_level, creation_time
+<mapper namespace="com.fworldcodez.wzool.dao.ZoolsMapper">
+    <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.Zools">
+        <id column="zool_id" property="zoolId" jdbcType="INTEGER"/>
+        <result column="zool_name" property="zoolName" jdbcType="VARCHAR"/>
+        <result column="zool_description" property="zoolDescription" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="emial" property="emial" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="start_level" property="startLevel" jdbcType="VARCHAR"/>
+        <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
+
+        <collection property="cardsList" column="card_id" javaType="ArrayList"
+                    ofType="com.fworldcodez.wzool.pojo.Cards">
+            <id column="card_id" property="cardId" jdbcType="INTEGER" />
+            <result column="card_description" property="cardDescription" jdbcType="INTEGER" />
+            <result column="zool_id" property="zoolId" jdbcType="INTEGER" />
+            <result column="card_price" property="cardPrice" jdbcType="INTEGER" />
+            <result column="card_ortginal_price" property="cardOrtginalPrice" jdbcType="INTEGER" />
+            <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+            <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+            <result column="card_photo" property="cardPhoto" jdbcType="VARCHAR" />
+        </collection>
+        <collection property="zoolPhotosList" column="photo_id" javaType="ArrayList"
+                    ofType="com.fworldcodez.wzool.pojo.ZoolPhotos">
+            <id column="photo_id" property="photoId" jdbcType="INTEGER" />
+            <result column="photos" property="photos" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    zool_id,zool_name,zool_description, url, address, emial, type, start_level, creation_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from zools
-    where zool_id = #{zoolId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from zools
+        where zool_id = #{zoolId,jdbcType=INTEGER}
+    </select>
+    <!--按条件查找-->
+    <select id="selectOfCondition" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        z.*,c.*,p.photos
+        from zools z
+        LEFT JOIN cards c ON c.zool_id=z.zool_id
+        LEFT JOIN zool_photos p ON p.zool_id=z.zool_id
+        where 1=1
+        <if test="zoolName !=null">
+            zool_name LIKE %${zoolName}%,
+        </if>
+        <if test="pageNow !=null and pageNumber !=null and pageNow !='' and pageNumber !=''">
+            limit ${(pageNow-1)*pageNumber},${pageNumber}
+        </if>
+    </select>
+    <!--按条件查找总数-->
+    <select id="selectCount" resultType="Integer" parameterType="java.lang.String">
+        select
+        count(z.zool_id)
+        from zools z
+        where 1=1
+        <if test="zoolName !=null">
+            zool_name LIKE %${zoolName}%,
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from zools
     where zool_id = #{zoolId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Zools" >
-    insert into zools (zool_id, zool_description, url, 
+    <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Zools">
+    insert into zools (zool_id,zool_name, zool_description, url,
       address, emial, type, 
       start_level, creation_time)
-    values (#{zoolId,jdbcType=INTEGER}, #{zoolDescription,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+    values (#{zoolId,jdbcType=INTEGER}, #{zoolName,jdbcType=VARCHAR}, #{zoolDescription,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
       #{address,jdbcType=VARCHAR}, #{emial,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{startLevel,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.Zools" >
-    insert into zools
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="zoolId != null" >
-        zool_id,
-      </if>
-      <if test="zoolDescription != null" >
-        zool_description,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="emial != null" >
-        emial,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="startLevel != null" >
-        start_level,
-      </if>
-      <if test="creationTime != null" >
-        creation_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="zoolId != null" >
-        #{zoolId,jdbcType=INTEGER},
-      </if>
-      <if test="zoolDescription != null" >
-        #{zoolDescription,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="emial != null" >
-        #{emial,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="startLevel != null" >
-        #{startLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="creationTime != null" >
-        #{creationTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.Zools" >
+    <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.Zools">
+        insert into zools
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="zoolId != null">
+                zool_id,
+            </if>
+            <if test="zoolName != null">
+                zool_name,
+            </if>
+            <if test="zoolDescription != null">
+                zool_description,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="emial != null">
+                emial,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="startLevel != null">
+                start_level,
+            </if>
+            <if test="creationTime != null">
+                creation_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="zoolId != null">
+                #{zoolId,jdbcType=INTEGER},
+            </if>
+            <if test="zoolName != null">
+                #{zoolName,jdbcType=VARCHAR},
+            </if>
+
+            <if test="zoolDescription != null">
+                #{zoolDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="emial != null">
+                #{emial,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="startLevel != null">
+                #{startLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null">
+                #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.Zools">
+        update zools
+        <set>
+            <if test="zoolName != null">
+                zool_name= #{zoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="zoolDescription != null">
+                zool_description = #{zoolDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="emial != null">
+                emial = #{emial,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="startLevel != null">
+                start_level = #{startLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null">
+                creation_time = #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where zool_id = #{zoolId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.Zools">
     update zools
-    <set >
-      <if test="zoolDescription != null" >
-        zool_description = #{zoolDescription,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="emial != null" >
-        emial = #{emial,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="startLevel != null" >
-        start_level = #{startLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="creationTime != null" >
-        creation_time = #{creationTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where zool_id = #{zoolId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.Zools" >
-    update zools
-    set zool_description = #{zoolDescription,jdbcType=VARCHAR},
+    set zool_name= #{zoolName,jdbcType=VARCHAR},
+    zool_description = #{zoolDescription,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       emial = #{emial,jdbcType=VARCHAR},

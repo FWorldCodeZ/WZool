@@ -1,9 +1,16 @@
 package com.fworldcodez.wzool.pojo;
 
-import java.util.Date;
 
-public class Zools {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+public class Zools extends PageBean implements Serializable {
     private Integer zoolId;
+
+    private String zoolName;
 
     private String zoolDescription;
 
@@ -19,12 +26,36 @@ public class Zools {
 
     private Date creationTime;
 
+    private List<Cards> cardsList=new ArrayList<>();
+
+    private List<ZoolPhotos> zoolPhotosList=new ArrayList<>();
+
+    public List<Cards> getCardsList() {
+        return cardsList;
+    }
+
+    public void setCardsList(List<Cards> cardsList) {
+        this.cardsList = cardsList;
+    }
+
+
+
+
     public Integer getZoolId() {
         return zoolId;
     }
 
     public void setZoolId(Integer zoolId) {
         this.zoolId = zoolId;
+    }
+
+    public String getZoolName() {
+        return zoolName;
+    }
+
+    public void setZoolName(String zoolName) {
+       // System.out.println("zoolName:"+zoolName);
+        this.zoolName = zoolName == null ? null : zoolName.trim();
     }
 
     public String getZoolDescription() {
@@ -81,5 +112,13 @@ public class Zools {
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public List<ZoolPhotos> getZoolPhotosList() {
+        return zoolPhotosList;
+    }
+
+    public void setZoolPhotosList(List<ZoolPhotos> zoolPhotosList) {
+        this.zoolPhotosList = zoolPhotosList;
     }
 }

@@ -7,7 +7,7 @@ server:
 spring:
   datasource:
     name: WZool
-    url: jdbc://mysql://127.0.0.1:3036/zool
+    url: jdbc:mysql://127.0.0.1:3306/zool?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
     username: root
     password: root
     #使用druid数据源
@@ -26,19 +26,31 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
-#  redis:
-#     database: 0
-#     host: 192.168.1.138
-#     password: root
-#     port: 6379
-#     timeout: 3000ms
-#     jedis:
-#       pool:
-#             max-idle: 500
-#             min-idle: 50
-#             max-active: 2000
-#             max-wait: 1000ms
+  redis:
+     database: 0
+     host: 127.0.0.1
+     password: root
+     port: 6379
+     timeout: 3000
+     jedis:
+       pool:
+             max-idle: 500
+             min-idle: 50
+             max-active: 2000
+             max-wait: 1000ms
+
+logging:
+  level:
+    org.springframework: ERROR
+    com.fworldcodez.wzool.dao: DEBUG
+    com.fworldcodez.wzool.controller: DEBUG
+#    org.spring.springboot.dao=DEBUG
+    org.mybatis.com.*: DEBUG
+  file: logs/WZool.log
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.fworldcodez.wzool.pojo
+
+myConfig:
+  imagePath: /page/image/
 

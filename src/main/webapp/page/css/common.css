@@ -322,3 +322,14 @@ footer {
 }
 
 /*小图标样式end*/
+/*分页*/
+.page_tool{
+    margin-left: 16%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    width: 60%;
+    height: 5%;
+    background-color: #FF5722;
+}
+/*分页按钮，带数字*/
+.btn_into{width:10%;}

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springframework.data:spring-data-redis:2.1.0.DATAREDIS-791-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.0.DATAREDIS-791-SNAPSHOT/spring-data-redis-2.1.0.DATAREDIS-791-20180322.141155-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.0.DATAREDIS-791-SNAPSHOT/spring-data-redis-2.1.0.DATAREDIS-791-20180322.141155-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.0.DATAREDIS-791-SNAPSHOT/spring-data-redis-2.1.0.DATAREDIS-791-20180322.141155-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
