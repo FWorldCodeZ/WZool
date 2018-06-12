@@ -23,7 +23,7 @@ public class ZoolsServiceImpl implements ZoolsService {
      */
     @Transactional
     @Override
-    public JsonResult selectOfCondition(Zools zools) {
+    public JsonResult selectOfCondition(Zools zools,int userId) {
         JsonResult jsonResult = new JsonResult();
         PageTools pageTools = new PageTools();
 

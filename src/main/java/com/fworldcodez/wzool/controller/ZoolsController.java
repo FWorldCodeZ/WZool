@@ -30,7 +30,8 @@ public class ZoolsController {
         JsonResult jsonResult=new JsonResult();
         try {
 //        File filePath = new File(request.getServletContext().getRealPath("/") + myConfig.imagePath);
-        jsonResult=zoolsService.selectOfCondition(zools);
+            int userId=0;
+        jsonResult=zoolsService.selectOfCondition(zools,userId);
         }catch (Exception e){
             e.printStackTrace();
             jsonResult.setStatus("500");

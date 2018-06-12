@@ -310,9 +310,9 @@ footer {
 
 /*徽章*/
 .icon_badge {
-    position:relative;
-    left:-65.5%;
-    top:-2%;
+    position: relative;
+    left: -65.5%;
+    top: -2%;
     font-size: 40%;
     width: 10%;
     font-weight: 900;
@@ -323,13 +323,51 @@ footer {
 
 /*小图标样式end*/
 /*分页*/
-.page_tool{
-    margin-left: 16%;
+.page_tool {
+    margin-left: 30%;
     margin-top: 0%;
+    padding: 1px;
     margin-bottom: 0%;
-    width: 60%;
     height: 5%;
-    background-color: #FF5722;
+    width: 50%;
 }
+
 /*分页按钮，带数字*/
-.btn_into{width:10%;}
+.btn_into, .page_next, .page_pre {
+    align-content: center;
+    margin-top: 0px;
+    width: 8%;
+    height: 100%;
+    /*width: 52px;*/
+    /*height: 43px;*/
+    border: 1px solid #e2e2e2;
+    background-color: #ffffff;
+    font-size: 14px;
+    float: left;
+}
+
+.btn_into, .page_next {
+    border-left-width: 0px;
+}
+.btn_into{
+
+}
+
+.page_pre {
+    border-top-left-radius:5%;
+    border-bottom-left-radius: 5%;
+}
+
+.page_next {
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%;
+
+}
+
+.page_now {
+    background-color: #aa6df6;
+    border-radius: 5%;
+    border-width: 1px;
+    border-color:#aa6df6;
+    color: #FFFFFF;
+}

@@ -34,13 +34,21 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="admin"
-               domainObjectName="Admin"
+        <!--<table tableName="admin"-->
+               <!--domainObjectName="Admin"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false"/>-->
+        <table tableName="user_collection"
+               domainObjectName="UserCollection"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
+
         <!--<table tableName="admin_role"-->
                <!--domainObjectName="AdminRole"-->
                <!--enableCountByExample="false"-->
