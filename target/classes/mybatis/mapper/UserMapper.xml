@@ -1,184 +1,202 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fworldcodez.wzool.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.User" >
-    <id column="_id" property="id" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="account" property="account" jdbcType="VARCHAR" />
-    <result column="user_pass_word" property="userPassWord" jdbcType="VARCHAR" />
-    <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="INTEGER" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="last_time" property="lastTime" jdbcType="TIMESTAMP" />
-    <result column="orgunit_id" property="orgunitId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    _id, user_name, account, user_pass_word, salt, state, address, phone, email, create_time, 
+<mapper namespace="com.fworldcodez.wzool.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.fworldcodez.wzool.pojo.User">
+        <id column="_id" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_time" property="lastTime" jdbcType="TIMESTAMP"/>
+        <result column="orgunit_id" property="orgunitId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    _id, user_name, account, user_password, salt, state, address, phone, email, create_time,
     last_time, orgunit_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where _id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where _id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <select id="login" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from user
-    where <if test="userName!=null and ">
-    user_name=#{userPassWord,jdbc=varChar},
-  </if><if test="userName!=null">
-    user_pass_word=#{userPassWord,jdbc=varChar},
-  </if>
-    <if test="state!=null">
-      state=#{state,jdbc=varChar},
-    </if>
-  </select>
+    <select id="login" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        u._id, u.user_name, u.account, u.user_password, u.salt, u.state
+        <if test="userPassword!=null and userPassword!=''">
+            ,r.role_name AS roleList,
+        p.per_code AS perminsStrlist
+        </if>
+        from user u
+        <if test="userPassword!=null and userPassword!=''">
+            LEFT JOIN admin_role a ON a.ad_id=u._id
+            LEFT JOIN role r ON r.role_id=a.roel_id
+            LEFT JOIN role_permission rp ON rp.role_id=r.role_id
+            LEFT JOIN permissions p ON p.per_id=rp.per_id
+        </if>
+        where
+        <if test="userName!=null and userName!='' ">
+            u.user_name=#{userName,jdbcType=VARCHAR}
+        </if>
+        <if test="userPassword!=null and userPassword!=''">
+          AND  u.user_password=#{userPassword,jdbcType=VARCHAR}
+        </if>
+        <if test="state!=null">
+            AND   u.state=#{state,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectByName" resultType="Integer" parameterType="java.lang.String">
+        select
+        _id
+        from user
+        where user_name = #{userPassword,jdbcType=INTEGER}
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where _id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.User" >
+    <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.User">
     insert into user (_id, user_name, account, 
-      user_pass_word, salt, state, 
+      user_password, salt, state,
       address, phone, email, 
       create_time, last_time, orgunit_id
       )
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
-      #{userPassWord,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{userPassword,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
       #{address,jdbcType=VARCHAR}, #{phone,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{lastTime,jdbcType=TIMESTAMP}, #{orgunitId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.User" >
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        _id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="account != null" >
-        account,
-      </if>
-      <if test="userPassWord != null" >
-        user_pass_word,
-      </if>
-      <if test="salt != null" >
-        salt,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="lastTime != null" >
-        last_time,
-      </if>
-      <if test="orgunitId != null" >
-        orgunit_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="account != null" >
-        #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="userPassWord != null" >
-        #{userPassWord,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null" >
-        #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=INTEGER},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastTime != null" >
-        #{lastTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="orgunitId != null" >
-        #{orgunitId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.User" >
-    update user
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="account != null" >
-        account = #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="userPassWord != null" >
-        user_pass_word = #{userPassWord,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null" >
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=INTEGER},
-      </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastTime != null" >
-        last_time = #{lastTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="orgunitId != null" >
-        orgunit_id = #{orgunitId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where _id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.User" >
+    <insert id="insertSelective" parameterType="com.fworldcodez.wzool.pojo.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                _id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastTime != null">
+                last_time,
+            </if>
+            <if test="orgunitId != null">
+                orgunit_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastTime != null">
+                #{lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orgunitId != null">
+                #{orgunitId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fworldcodez.wzool.pojo.User">
+        update user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastTime != null">
+                last_time = #{lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orgunitId != null">
+                orgunit_id = #{orgunitId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where _id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fworldcodez.wzool.pojo.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       account = #{account,jdbcType=VARCHAR},
-      user_pass_word = #{userPassWord,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
       address = #{address,jdbcType=VARCHAR},

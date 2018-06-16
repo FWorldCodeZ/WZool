@@ -2,6 +2,7 @@ function login() {
     var option = {
         url: getPath() + "/user/login",
         type: "post",
+        contentType: "application/json; charset=utf-8",
         beforeSend: function (request) {
 
         },

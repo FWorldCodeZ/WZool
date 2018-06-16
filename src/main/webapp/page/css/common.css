@@ -138,7 +138,7 @@ footer {
     margin-bottom: 10px;
     height: 95%;
     width: 75%;
-    padding: 15% 25px 0px 25px;
+    padding: 5% 25px 36px 25px;
     background-color: #f6fcf4;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -221,7 +221,7 @@ footer {
 
 /*注册 登陆跳转转 start*/
 .sin_to {
-    margin-left: 20%;
+    margin-left: 30%;
     margin-top: 4%;
 }
 

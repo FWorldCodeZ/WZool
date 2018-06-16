@@ -5,6 +5,7 @@
     <title>WZool-注册</title>
     <link rel="stylesheet" href="../js/layui/css/layui.css"/>
     <link rel="stylesheet" href="../css/common.css" type="text/css"/>
+    <link rel="stylesheet" href="../js/layer/theme/default/layer.css"/>
 </head>
 <body>
 
@@ -70,20 +71,20 @@
         <div class="reg_right_content">
             <div class="reg_content">
                 <h2>用户注册</h2>
-                <form id="form" action="javascript:login();" enctype="multipart/form-data">
+                <form id="form" action="javascript:register();" enctype="multipart/form-data">
                     <div class="input">
                         <label class="input_p">&nbsp;&nbsp;&nbsp;&nbsp;用户名</label>
                         <input type="text"
                                autocomplete="off"
                                placeholder="请输入用户名/邮箱/手机号"
                                class="input_in"
-                               id="username"
-                               name="username" required>
+                               id="userName"
+                               name="userName" required>
                     </div>
                     <div class="input">
                         <label class="input_p"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</label>
-                        <input id="password"
-                               name="password"
+                        <input id="userPassword"
+                               name="userPassword"
                                autocomplete="off"
                                placeholder="请输入密码"
                                class="input_in"
@@ -139,8 +140,9 @@
 <script src="../js/jquery.min.js"></script>
 <script src="../js/jquery.form.js"></script>
 <script src="../js/layui/layui.js" type="text/javascript"></script>
+<script src="../js/layer/layer.js" type="text/javascript"></script>
 <script src="../js/common.js"></script>
-<script src="../js/login.js"></script>
+<script src="../js/register.js"></script>
 <script>
 
     //注意：导航 依赖 element 模块，否则无法进行功能性操作

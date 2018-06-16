@@ -11,5 +11,5 @@ public interface UserService {
     User login(UserDto userDto);
     /**
      * 注册*/
-    JsonResult register(UserDto userDto);
+    JsonResult register(User user);
 }

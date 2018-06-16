@@ -11,9 +11,6 @@ function getPath() {
     return result;
 }
 
-
-
-
 var contenshow={
     template:
         `<div class="zool_content_show">

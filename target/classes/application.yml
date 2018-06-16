@@ -31,7 +31,8 @@ spring:
      host: 127.0.0.1
      password: root
      port: 6379
-     timeout: 3000
+     timeout: 30000
+     exprie: 1000
      jedis:
        pool:
              max-idle: 500
@@ -41,16 +42,19 @@ spring:
 
 logging:
   level:
-    org.springframework: ERROR
-    com.fworldcodez.wzool.dao: DEBUG
+    org.springframework: DEBUG
+    com.fworldcodez.wzool.dao: INFO
     com.fworldcodez.wzool.controller: DEBUG
+#    com.fworldcodez.wzool.cofig: info
 #    org.spring.springboot.dao=DEBUG
-    org.mybatis.com.*: DEBUG
+    org.mybatis.com.*: info
   file: logs/WZool.log
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.fworldcodez.wzool.pojo
 
 myConfig:
+  sessionInfo: sessionInfo
+  sessionPrefix: SHIRO_SESSION_ID
   imagePath: /page/image/
 

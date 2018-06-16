@@ -1,5 +1,9 @@
 package com.fworldcodez.wzool.dto;
 
+import com.fworldcodez.wzool.pojo.Role;
+
+import java.util.List;
+
 public class UserDto {
     /**
      * 用户id
@@ -16,7 +20,7 @@ public class UserDto {
     /**
      * 用户密码
      * */
-    private String userPassWord;
+    private String userPassword;
     /**
      * 盐值
      * */
@@ -25,6 +29,9 @@ public class UserDto {
      * 用户状态
      * */
     private Integer state;
+    /**角色id*/
+
+    private List<Role> roleList;// 一个用户具有多个角色
 
     public Integer getId() {
         return id;
@@ -50,13 +57,7 @@ public class UserDto {
         this.account = account;
     }
 
-    public String getUserPassWord() {
-        return userPassWord;
-    }
 
-    public void setUserPassWord(String userPassWord) {
-        this.userPassWord = userPassWord;
-    }
 
     public String getSalt() {
         return salt;
@@ -75,4 +76,11 @@ public class UserDto {
     }
 
 
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 }

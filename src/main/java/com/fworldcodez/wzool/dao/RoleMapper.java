@@ -11,6 +11,11 @@ public interface RoleMapper {
 
     Role selectByPrimaryKey(Integer roleId);
 
+    /**
+     * 通过权限名查找id
+     */
+    Integer selectByName(String roleName);
+
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);

@@ -1,16 +1,21 @@
 package com.fworldcodez.wzool.pojo;
 
-import java.util.Date;
-import java.util.List;
+import com.sun.xml.internal.ws.developer.Serialization;
 
-public class User {
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class User implements Serializable {
     private Integer id;
 
     private String userName;
 
     private String account;
 
-    private String userPassWord;
+    private String userPassword;
 
     private String salt;
 
@@ -28,13 +33,15 @@ public class User {
 
     private Integer orgunitId;
 
-    private List<Role> roleList;// 一个用户具有多个角色
+    private Set<String> roleList= new HashSet<>();// 一个用户具有多个角色
 
-    public List<Role> getRoleList() {
+    private Set<String> perminsStrlist= new HashSet<>();// 一个角色具有多个权限
+
+    public Set<String> getRoleList() {
         return roleList;
     }
 
-    public void setRoleList(List<Role> roleList) {
+    public void setRoleList(Set<String> roleList) {
         this.roleList = roleList;
     }
 
@@ -62,13 +69,6 @@ public class User {
         this.account = account == null ? null : account.trim();
     }
 
-    public String getUserPassWord() {
-        return userPassWord;
-    }
-
-    public void setUserPassWord(String userPassWord) {
-        this.userPassWord = userPassWord == null ? null : userPassWord.trim();
-    }
 
     public String getSalt() {
         return salt;
@@ -132,5 +132,21 @@ public class User {
 
     public void setOrgunitId(Integer orgunitId) {
         this.orgunitId = orgunitId;
+    }
+
+    public Set<String> getPerminsStrlist() {
+        return perminsStrlist;
+    }
+
+    public void setPerminsStrlist(Set<String> perminsStrlist) {
+        this.perminsStrlist = perminsStrlist;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 }

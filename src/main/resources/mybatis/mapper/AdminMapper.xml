@@ -5,7 +5,7 @@
     <id column="_id" property="id" jdbcType="INTEGER" />
     <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
     <result column="account" property="account" jdbcType="VARCHAR" />
-    <result column="admin_pass_word" property="adminPassWord" jdbcType="VARCHAR" />
+    <result column="admin_password" property="adminPassWord" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="address" property="address" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="orgunit_id" property="orgunitId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    _id, admin_name, account, admin_pass_word, salt, state, address, phone, email, create_time, 
+    _id, admin_name, account, admin_password, salt, state, address, phone, email, create_time,
     last_time, orgunit_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -31,7 +31,7 @@
   </delete>
   <insert id="insert" parameterType="com.fworldcodez.wzool.pojo.Admin" >
     insert into admin (_id, admin_name, account, 
-      admin_pass_word, salt, state, 
+      admin_password, salt, state,
       address, phone, email, 
       create_time, last_time, orgunit_id
       )
@@ -54,7 +54,7 @@
         account,
       </if>
       <if test="adminPassWord != null" >
-        admin_pass_word,
+        admin_password,
       </if>
       <if test="salt != null" >
         salt,
@@ -130,7 +130,7 @@
         account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="adminPassWord != null" >
-        admin_pass_word = #{adminPassWord,jdbcType=VARCHAR},
+        admin_password = #{adminPassWord,jdbcType=VARCHAR},
       </if>
       <if test="salt != null" >
         salt = #{salt,jdbcType=VARCHAR},
@@ -163,7 +163,7 @@
     update admin
     set admin_name = #{adminName,jdbcType=VARCHAR},
       account = #{account,jdbcType=VARCHAR},
-      admin_pass_word = #{adminPassWord,jdbcType=VARCHAR},
+      admin_password = #{adminPassWord,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
       address = #{address,jdbcType=VARCHAR},

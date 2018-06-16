@@ -17,6 +17,11 @@ public interface UserMapper {
      */
     List<User> login(UserDto userDto);
 
+    /**
+     * 通过用户名查找id
+     */
+    Integer selectByName(String userName);
+
     User selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(User record);

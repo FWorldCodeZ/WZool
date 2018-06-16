@@ -1,6 +1,7 @@
 package com.fworldcodez.wzool.service.impl;
 
 import com.fworldcodez.wzool.common.JsonResult;
+import com.fworldcodez.wzool.config.MyConfig;
 import com.fworldcodez.wzool.dao.ZoolsMapper;
 import com.fworldcodez.wzool.pojo.Zools;
 import com.fworldcodez.wzool.service.ZoolsService;
@@ -17,6 +18,8 @@ import java.util.Map;
 public class ZoolsServiceImpl implements ZoolsService {
     @Autowired
     private ZoolsMapper zoolsMapper;
+    @Autowired
+    private MyConfig myConfig;
 
     /**
      * 按条件查找所有动物园
