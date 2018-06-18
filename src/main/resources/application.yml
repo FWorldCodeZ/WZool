@@ -42,8 +42,8 @@ spring:
 
 logging:
   level:
-    org.springframework: DEBUG
-    com.fworldcodez.wzool.dao: INFO
+    org.springframework: ERROR
+    com.fworldcodez.wzool.dao: DEBUG
     com.fworldcodez.wzool.controller: DEBUG
 #    com.fworldcodez.wzool.cofig: info
 #    org.spring.springboot.dao=DEBUG

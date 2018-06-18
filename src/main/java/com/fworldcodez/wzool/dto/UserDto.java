@@ -1,8 +1,7 @@
 package com.fworldcodez.wzool.dto;
 
-import com.fworldcodez.wzool.pojo.Role;
-
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDto {
     /**
@@ -31,7 +30,9 @@ public class UserDto {
     private Integer state;
     /**角色id*/
 
-    private List<Role> roleList;// 一个用户具有多个角色
+    private Set<String> roleList= new HashSet<>();// 一个用户具有多个角色
+
+    private Set<String> perminsStrlist= new HashSet<>();// 一个角色具有多个权限
 
     public Integer getId() {
         return id;
@@ -82,5 +83,21 @@ public class UserDto {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public Set<String> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(Set<String> roleList) {
+        this.roleList = roleList;
+    }
+
+    public Set<String> getPerminsStrlist() {
+        return perminsStrlist;
+    }
+
+    public void setPerminsStrlist(Set<String> perminsStrlist) {
+        this.perminsStrlist = perminsStrlist;
     }
 }

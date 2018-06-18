@@ -8,7 +8,7 @@ public class JsonResult {
 
     private String msg;
 
-    private Map<Object,Object> item=new HashMap<>();
+    private Map<String,Object> item=new HashMap<>();
 
     public String getStatus() {
         return status;
@@ -26,11 +26,11 @@ public class JsonResult {
         this.msg = msg;
     }
 
-    public Map<Object, Object> getItem() {
+    public Map<String, Object> getItem() {
         return item;
     }
 
-    public void setItem(Map<Object, Object> item) {
+    public void setItem(Map<String, Object> item) {
         this.item = item;
     }
 

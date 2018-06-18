@@ -68,35 +68,34 @@ public class ShiroConfig {
 //  }
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
-
         logger.info("##################从数据库读取权限规则，加载到shiroFilter中##################");
-//        filterChainDefinitionMap.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取
-        System.out.println("ShiroConfiguration.shirFilter()");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         //注意过滤器配置顺序 不能颠倒
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了，登出后跳转配置的loginUrl
-        filterChainDefinitionMap.put("/logout", "logout");
+      //  filterChainDefinitionMap.put("/logout", "logout");
+        //配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
+        //shiroFilterFactoryBean.setLoginUrl("/unauth");
+        // 登录成功后要跳转的链接
+        shiroFilterFactoryBean.setSuccessUrl("/page/html/index.html");
+//        filterChainDefinitionMap.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取
+
+        //未授权界面;
+//        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         // 配置不会被拦截的链接 顺序判断
         // anon：它对应的过滤器里面是空的,什么都没做
 //        filterChainDefinitionMap.put("/static/**", "anon");
         //filterChainDefinitionMap.put("/ajaxLogin", "anon");
         filterChainDefinitionMap.put("/login", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/zools", "anon");//anon 可以理解为不拦截
-        //验证码的路径   不要跟下面需要认证的写在一个路径里  会被拦截的
-        filterChainDefinitionMap.put("/servlet/**", "anon");
+//        //验证码的路径   不要跟下面需要认证的写在一个路径里  会被拦截的
+//        filterChainDefinitionMap.put("/servlet/**", "anon");
         // authc：该过滤器下的页面必须验证后才能访问，
         // 它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter
 //        filterChainDefinitionMap.put("/user", "authc");// 这里为了测试，只限制/user，实际开发中请修改为具体拦截的请求规则
         // filterChainDefinitionMap.put("/**", "authc");
-        //配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
-        //shiroFilterFactoryBean.setLoginUrl("/unauth");
-        // 登录成功后要跳转的链接
-//        shiroFilterFactoryBean.setSuccessUrl("/index");
-        //未授权界面;
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -115,17 +114,16 @@ public class ShiroConfig {
 //        hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));
 //        return hashedCredentialsMatcher;
 //    }
-
     @Bean
     public ShiroRealm myShiroRealm() {
         ShiroRealm myShiroRealm = new ShiroRealm();
-       // myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        // myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
     }
 
 
     @Bean
-    public SecurityManager securityManager()  {
+    public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myShiroRealm());
         // 自定义缓存实现 使用redis
@@ -215,6 +213,7 @@ public class ShiroConfig {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
+
     /**
      * 这里需要设置一个cookie名称 原因就是会跟原来的session的id值重复的
      */

@@ -29,14 +29,14 @@ public class ZoolsServiceImpl implements ZoolsService {
     public JsonResult selectOfCondition(Zools zools,int userId) {
         JsonResult jsonResult = new JsonResult();
         PageTools pageTools = new PageTools();
-
+        zools.setUserId(userId);
         List<Zools> list = zoolsMapper.selectOfCondition(zools);
         int count = zoolsMapper.selectCount(zools);
         pageTools.setCount(count);
         pageTools.setObj(list);
         pageTools.setPageNow(zools.getPageNow());
         pageTools.setPageNumber(zools.getPageNumber());
-        Map<Object, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("map", pageTools);
         jsonResult.setItem(map);
         jsonResult.setMsg("查询成功！");

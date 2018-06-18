@@ -11,17 +11,52 @@ function getPath() {
     return result;
 }
 
-var contenshow={
+var contenshow = {
     template:
         `<div class="zool_content_show">
 
        
 
             </div>`
-
-
 }
 
+//------------------------ajax共用方法--------------------------------------
+function commonAjax(obj, path, data, type, show) {
+    var option = {
+        url: getPath() + "/" + path,
+        data: JSON.stringify(data),
+        type: type,
+        dateType: "json",
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function (request) {
+            // request.setRequestHeader("token", localStorage.getItem("token"));
+            // request.setRequestHeader("id", localStorage.getItem("id"));
+            // layer.load();
+        },
+        success: function (data) {
+            //  layer.closeAll();
+            if (data.status == "200") {
+                show(obj, data);
+            } else if (data.status == "500") {
+                //  layer.msg("用户验证失败，请重新登陆", {icon: 5, time: 1000});
+                localStorage.clear();
+                setTimeout(goLogin, 1000);
+            }
+        },
+        error: function (data) {
+            // layer.closeAll();
+            // layer.msg(data.msg, {icon: 5, time: 1000});
+        }
+    }
+    return $.ajax(option);
+}
+
+function goLogin() {
+    top.location.href = getPath() + "/+" + login.html;
+}
+
+
+//------------------------------------------------------
 var page_count = 0;//总页数
 var page_now = 0;//当前页数
 var page_number = 100;//当前页记录大小
@@ -30,14 +65,16 @@ var info_total = 0;//总记录条数
 function page_tool(page_now, page_number, info_total, cardInfos) {
     $(".zool_content_show").empty();
     var page_size = 0;//当前页当前条数
-    var cardInfos=cardInfos;
+    var cardInfos = cardInfos;
     page_count = parseInt(info_total / page_number);
     if (info_total % page_number > 0) {
         page_count++
     }
-   page_size =cardInfos.length ;
+    page_size = cardInfos.length;
     var html = '';
+    var zoolID;
     for (var i = 0; i < page_size; i++) {
+        zoolID = cardInfos[i].zoolId;
         //一行四列
         if (i % 4 == 0) {
             //   console.log(i);
@@ -57,10 +94,15 @@ function page_tool(page_now, page_number, info_total, cardInfos) {
             '                        <div class="icon_line">\n' +
             '                            <div class="layui-icon layui-icon-location icon_style" title="去那里"></div>\n' +
             '                            <div class="layui-icon icon-ticket icon_style" title="门票"></div>\n' +
-            '                            <span class="icon_badge">9折</span>\n' +
-            '                            <div class="layui-icon layui-icon-star icon_style" title="收藏"></div>\n' +
-            '                            <!--layui-icon-star-fill-->\n' +
-            '                            <div class="layui-icon layui-icon-share icon_style" title="分享"></div>\n' +
+            '                            <span class="icon_badge">9折</span>';
+        if (zoolID==cardInfos[i].otherId) {
+            html += '<div class="layui-icon layui-icon-star-fill icon_style" onclick="collection(this,' + zoolID + ')" title="收藏"></div>';
+        }else {
+            html += '<div class="layui-icon layui-icon-star icon_style" onclick="collection(this,' + zoolID + ')" title="收藏"></div>';
+        }
+
+
+        html += '                            <div class="layui-icon layui-icon-share icon_style" title="分享"></div>\n' +
             '                            <div class="layui-icon layui-icon-more-vertical icon_style" title="详情" onclick="test"></div>\n' +
             '                        </div>\n' +
             '                        <fieldset class="show_line">\n' +
@@ -74,11 +116,11 @@ function page_tool(page_now, page_number, info_total, cardInfos) {
     html += '</div>';
 
     $(".zool_content_show").append(html);
-    page_show(page_now,page_count);
+    page_show(page_now, page_count);
 }
 
 
-function page_show(page_now,page_count) {
+function page_show(page_now, page_count) {
     $(".page_tool").empty();
     var page_html;//页码
     page_html = '<button type="button" class="page_pre"  onclick="prevTo()">上一页</button>';
@@ -88,19 +130,19 @@ function page_show(page_now,page_count) {
             if (i == page_now) {
                 page_html += '<button type="button" class="btn_into page_now">' + i + '</button>';
             } else {
-                page_html += '<button type="button" class="btn_into"  onclick="pageInto('+i+')">' + i + '</button>';
+                page_html += '<button type="button" class="btn_into"  onclick="pageInto(' + i + ')">' + i + '</button>';
             }
 
         }
     } else {
         for (var i = 1; i < 7; i++) {
             if (i < 6) {
-                page_html += '<button type="button" class="btn_into"  onclick="pageInto('+i+')">' + i + '</button>';
+                page_html += '<button type="button" class="btn_into"  onclick="pageInto(' + i + ')">' + i + '</button>';
             } else if (i = 6) {
                 page_html += '<button type="button" class="btn_into">...</button>';
             }
         }
-        page_html += '<button class="btn_into" onclick="pageInto('+page_count+')">' + page_count + '</button>';
+        page_html += '<button class="btn_into" onclick="pageInto(' + page_count + ')">' + page_count + '</button>';
     }
     page_html += '<button type="button" class="page_next"  onclick="nextTo()" >下一页</button>';
     $(".page_tool").append(page_html);
@@ -121,9 +163,9 @@ function page_pre(page_now) {
 
 //下一页
 function page_next(page_now) {
-    console.log("page_count"+page_count)
-    console.log("page_now"+page_now)
-    if (page_now <page_count) {
+    console.log("page_count" + page_count)
+    console.log("page_now" + page_now)
+    if (page_now < page_count) {
         page_now++;
         return page_now;
     }

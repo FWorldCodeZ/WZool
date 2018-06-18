@@ -10,6 +10,10 @@ import java.util.List;
 public class Zools extends PageBean implements Serializable {
     private Integer zoolId;
 
+    private Integer userId;
+
+    private Integer otherId;
+
     private String zoolName;
 
     private String zoolDescription;
@@ -26,9 +30,9 @@ public class Zools extends PageBean implements Serializable {
 
     private Date creationTime;
 
-    private List<Cards> cardsList=new ArrayList<>();
+    private List<Cards> cardsList = new ArrayList<>();
 
-    private List<ZoolPhotos> zoolPhotosList=new ArrayList<>();
+    private List<ZoolPhotos> zoolPhotosList = new ArrayList<>();
 
     public List<Cards> getCardsList() {
         return cardsList;
@@ -37,8 +41,6 @@ public class Zools extends PageBean implements Serializable {
     public void setCardsList(List<Cards> cardsList) {
         this.cardsList = cardsList;
     }
-
-
 
 
     public Integer getZoolId() {
@@ -54,7 +56,7 @@ public class Zools extends PageBean implements Serializable {
     }
 
     public void setZoolName(String zoolName) {
-       // System.out.println("zoolName:"+zoolName);
+        // System.out.println("zoolName:"+zoolName);
         this.zoolName = zoolName == null ? null : zoolName.trim();
     }
 
@@ -120,5 +122,21 @@ public class Zools extends PageBean implements Serializable {
 
     public void setZoolPhotosList(List<ZoolPhotos> zoolPhotosList) {
         this.zoolPhotosList = zoolPhotosList;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getOtherId() {
+        return otherId;
+    }
+
+    public void setOtherId(Integer otherId) {
+        this.otherId = otherId;
     }
 }

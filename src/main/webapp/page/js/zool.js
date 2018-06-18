@@ -78,8 +78,9 @@ $(
 )
 
 var pageNow = 1;
+
 function zools(pageNow) {
-    var pageNow =pageNow;
+    var pageNow = pageNow;
     var pageNumber = 12;
 
     var _that;
@@ -87,7 +88,7 @@ function zools(pageNow) {
         'pageNow': pageNow,
         'pageNumber': pageNumber
     })
-  //  console.log("zz" + pageNumber);
+    //  console.log("zz" + pageNumber);
     var option = {
         url: getPath() + "/zools/selectByCondition",
         data: data,
@@ -124,4 +125,27 @@ function prevTo() {
 function pageInto(data) {
     pageNow = data;
     this.zools(data);
+}
+
+//收藏点击
+function collection(obj,zoolId) {
+    var path = "collection/addCollection";
+    var data = {
+        otherId:zoolId ,
+        collType: 'zools'
+    };
+    var type = "post"
+    commonAjax(obj,path, data, type, show);
+}
+
+function show(obj, data) {
+    if(data.msg=="收藏成功！"){
+        $(obj).removeClass("layui-icon-star");
+        $(obj).addClass("layui-icon-star-fill");
+        layer.msg(data.msg)
+    }else {
+        layer.msg(data.msg)
+        $(obj).removeClass("layui-icon-star-fill");
+        $(obj).addClass("layui-icon-star");
+    }
 }

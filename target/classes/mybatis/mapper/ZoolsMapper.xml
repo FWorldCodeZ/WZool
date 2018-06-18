@@ -11,7 +11,6 @@
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="start_level" property="startLevel" jdbcType="VARCHAR"/>
         <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
-
         <collection property="cardsList" column="card_id" javaType="ArrayList"
                     ofType="com.fworldcodez.wzool.pojo.Cards">
             <id column="card_id" property="cardId" jdbcType="INTEGER" />
@@ -28,6 +27,9 @@
             <id column="photo_id" property="photoId" jdbcType="INTEGER" />
             <result column="photos" property="photos" jdbcType="VARCHAR" />
         </collection>
+        <collection property="otherId"  column="otherId" javaType="INTEGER">
+            <result column="other_id" jdbcType="INTEGER" property="otherId" />
+        </collection>
     </resultMap>
     <sql id="Base_Column_List">
     zool_id,zool_name,zool_description, url, address, emial, type, start_level, creation_time
@@ -41,13 +43,17 @@
     <!--按条件查找-->
     <select id="selectOfCondition" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
-        z.*,c.*,p.photos
+        z.*,c.*,p.photos,u.other_id
         from zools z
         LEFT JOIN cards c ON c.zool_id=z.zool_id
         LEFT JOIN zool_photos p ON p.zool_id=z.zool_id
+        <if test="userId !=null">
+        LEFT JOIN user_collection u ON u.other_id=z.zool_id
+            and u.user_id=#{userId,jdbcType=INTEGER}
+        </if>
         where 1=1
         <if test="zoolName !=null">
-            zool_name LIKE %${zoolName}%,
+           AND  zool_name LIKE %${zoolName}%
         </if>
         <if test="pageNow !=null and pageNumber !=null and pageNow !='' and pageNumber !=''">
             limit ${(pageNow-1)*pageNumber},${pageNumber}

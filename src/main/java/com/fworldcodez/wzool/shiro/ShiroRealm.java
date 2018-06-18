@@ -47,7 +47,8 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = (User) principalCollection.getPrimaryPrincipal();
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
-        //session.getAttribute(myConfig.sessionInfo);
+        User user1= (User) session.getAttribute(myConfig.sessionInfo);
+        logger.info("shiro=----user.getId()"+user.getId());
         if (user != null) {
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

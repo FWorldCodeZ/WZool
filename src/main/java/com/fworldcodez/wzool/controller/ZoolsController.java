@@ -2,6 +2,7 @@ package com.fworldcodez.wzool.controller;
 
 import com.fworldcodez.wzool.common.JsonResult;
 import com.fworldcodez.wzool.config.MyConfig;
+import com.fworldcodez.wzool.pojo.User;
 import com.fworldcodez.wzool.pojo.Zools;
 import com.fworldcodez.wzool.service.ZoolsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 
 @Controller
@@ -21,18 +23,23 @@ public class ZoolsController {
     private ZoolsService zoolsService;
     @Autowired
     private MyConfig myConfig;
+
     /**
      * 按条件查找
-     * */
+     */
     @RequestMapping(value = "/selectByCondition", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult selectByCondition(@RequestBody Zools zools, HttpServletRequest request){
-        JsonResult jsonResult=new JsonResult();
+    public JsonResult selectByCondition(@RequestBody Zools zools, HttpSession session, HttpServletRequest request) {
+        JsonResult jsonResult = new JsonResult();
         try {
+            Integer userId = 0;
 //        File filePath = new File(request.getServletContext().getRealPath("/") + myConfig.imagePath);
-            int userId=0;
-        jsonResult=zoolsService.selectOfCondition(zools,userId);
-        }catch (Exception e){
+            User user = (User) session.getAttribute(myConfig.sessionInfo);
+            if (user != null) {
+                userId = user.getId();
+            }
+            jsonResult = zoolsService.selectOfCondition(zools, userId);
+        } catch (Exception e) {
             e.printStackTrace();
             jsonResult.setStatus("500");
             jsonResult.setMsg("异常！");
