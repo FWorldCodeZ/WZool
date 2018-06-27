@@ -5,7 +5,9 @@ import java.util.Date;
 public class Cards {
     private Integer cardId;
 
-    private Integer cardDescription;
+    private String cardTitle;
+
+    private String cardDescription;
 
     private Integer zoolId;
 
@@ -13,9 +15,11 @@ public class Cards {
 
     private Integer cardOrtginalPrice;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
+
+    private Long addTime;
 
     private String cardPhoto;
 
@@ -27,12 +31,20 @@ public class Cards {
         this.cardId = cardId;
     }
 
-    public Integer getCardDescription() {
+    public String getCardTitle() {
+        return cardTitle;
+    }
+
+    public void setCardTitle(String cardTitle) {
+        this.cardTitle = cardTitle == null ? null : cardTitle.trim();
+    }
+
+    public String getCardDescription() {
         return cardDescription;
     }
 
-    public void setCardDescription(Integer cardDescription) {
-        this.cardDescription = cardDescription;
+    public void setCardDescription(String cardDescription) {
+        this.cardDescription = cardDescription == null ? null : cardDescription.trim();
     }
 
     public Integer getZoolId() {
@@ -59,20 +71,28 @@ public class Cards {
         this.cardOrtginalPrice = cardOrtginalPrice;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public Long getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Long addTime) {
+        this.addTime = addTime;
     }
 
     public String getCardPhoto() {

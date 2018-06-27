@@ -97,6 +97,7 @@ function zools(pageNow) {
         success: function (data) {
             if (data.status == "200") {
                 _that = data.item.map;
+                console.log(data.item)
                 page_tool(_that.pageNow, pageNumber, _that.count, _that.obj);
 
             }
@@ -128,24 +129,28 @@ function pageInto(data) {
 }
 
 //收藏点击
-function collection(obj,zoolId) {
+function collection(obj, zoolId) {
     var path = "collection/addCollection";
     var data = {
-        otherId:zoolId ,
+        otherId: zoolId,
         collType: 'zools'
     };
     var type = "post"
-    commonAjax(obj,path, data, type, show);
+    commonAjax(obj, path, data, type, show);
 }
 
 function show(obj, data) {
-    if(data.msg=="收藏成功！"){
+    if (data.msg == "收藏成功！") {
         $(obj).removeClass("layui-icon-star");
         $(obj).addClass("layui-icon-star-fill");
         layer.msg(data.msg)
-    }else {
+    } else {
         layer.msg(data.msg)
         $(obj).removeClass("layui-icon-star-fill");
         $(obj).addClass("layui-icon-star");
     }
+
+    // function pushInfo(data) {
+    //     alert(data);
+    // }
 }

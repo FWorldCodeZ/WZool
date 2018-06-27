@@ -38,7 +38,7 @@ function commonAjax(obj, path, data, type, show) {
             if (data.status == "200") {
                 show(obj, data);
             } else if (data.status == "500") {
-                //  layer.msg("用户验证失败，请重新登陆", {icon: 5, time: 1000});
+                layer.msg(data.msg)
                 localStorage.clear();
                 setTimeout(goLogin, 1000);
             }
@@ -171,5 +171,4 @@ function page_next(page_now) {
     }
     layer.msg("已经是最后一页了！")
     return page_now;
-
 }

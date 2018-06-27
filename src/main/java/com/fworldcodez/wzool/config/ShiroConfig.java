@@ -18,8 +18,10 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.LinkedHashMap;
@@ -42,7 +44,15 @@ public class ShiroConfig {
 //    private String password;
 //    @Value("${spring.redis.expire}")
 //    private String expire;
-
+@Bean
+public FilterRegistrationBean<DelegatingFilterProxy> delegatingFilterProxy(){
+    FilterRegistrationBean<DelegatingFilterProxy> filterRegistrationBean = new FilterRegistrationBean<>();
+    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+    proxy.setTargetFilterLifecycle(true);
+    proxy.setTargetBeanName("shiroFilter");
+    filterRegistrationBean.setFilter(proxy);
+    return filterRegistrationBean;
+}
     /**
      * 注册DelegatingFilterProxy（Shiro）
      * 集成Shiro有2种方法：
@@ -66,27 +76,29 @@ public class ShiroConfig {
 //      filterRegistration.addUrlPatterns("/*");// 可以自己灵活的定义很多，避免一些根本不需要被Shiro处理的请求被包含进来
 //      return filterRegistration;
 //  }
-    @Bean
+    @Bean(name="shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         logger.info("##################从数据库读取权限规则，加载到shiroFilter中##################");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+
         //注意过滤器配置顺序 不能颠倒
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了，登出后跳转配置的loginUrl
-      //  filterChainDefinitionMap.put("/logout", "logout");
+        //  filterChainDefinitionMap.put("/logout", "logout");
         //配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
         //shiroFilterFactoryBean.setLoginUrl("/unauth");
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/page/html/index.html");
-//        filterChainDefinitionMap.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取
-
         //未授权界面;
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        //        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+        // filterChainDefinitionMap.put("/user/edit/**", "authc,perms[user:edit]");// 这里为了测试，固定写死的值，也可以从数据库或其他配置中读取
+
         // 配置不会被拦截的链接 顺序判断
         // anon：它对应的过滤器里面是空的,什么都没做
-//        filterChainDefinitionMap.put("/static/**", "anon");
+        //        filterChainDefinitionMap.put("/static/**", "anon");
         //filterChainDefinitionMap.put("/ajaxLogin", "anon");
         filterChainDefinitionMap.put("/login", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/zools", "anon");//anon 可以理解为不拦截
@@ -94,7 +106,7 @@ public class ShiroConfig {
 //        filterChainDefinitionMap.put("/servlet/**", "anon");
         // authc：该过滤器下的页面必须验证后才能访问，
         // 它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter
-//        filterChainDefinitionMap.put("/user", "authc");// 这里为了测试，只限制/user，实际开发中请修改为具体拦截的请求规则
+        filterChainDefinitionMap.put("/collection", "authc");// 这里为了测试，只限制/collection，实际开发中请修改为具体拦截的请求规则
         // filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

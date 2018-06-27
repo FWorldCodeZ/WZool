@@ -123,4 +123,8 @@
 .recommend_title{
     font-size: 20px;
     margin-bottom: 5%;
+    margin-left: 10%;
+}
+.layui-timeline{
+    margin-left: 10%;
 }
