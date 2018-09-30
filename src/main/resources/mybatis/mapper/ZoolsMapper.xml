@@ -13,22 +13,22 @@
         <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
         <collection property="cardsList" column="card_id" javaType="ArrayList"
                     ofType="com.fworldcodez.wzool.pojo.Cards">
-            <id column="card_id" property="cardId" jdbcType="INTEGER" />
-            <result column="card_description" property="cardDescription" jdbcType="INTEGER" />
-            <result column="zool_id" property="zoolId" jdbcType="INTEGER" />
-            <result column="card_price" property="cardPrice" jdbcType="INTEGER" />
-            <result column="card_ortginal_price" property="cardOrtginalPrice" jdbcType="INTEGER" />
-            <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-            <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-            <result column="card_photo" property="cardPhoto" jdbcType="VARCHAR" />
+            <id column="card_id" property="cardId" jdbcType="INTEGER"/>
+            <result column="card_description" property="cardDescription" jdbcType="INTEGER"/>
+            <result column="zool_id" property="zoolId" jdbcType="INTEGER"/>
+            <result column="card_price" property="cardPrice" jdbcType="INTEGER"/>
+            <result column="card_ortginal_price" property="cardOrtginalPrice" jdbcType="INTEGER"/>
+            <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+            <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+            <result column="card_photo" property="cardPhoto" jdbcType="VARCHAR"/>
         </collection>
         <collection property="zoolPhotosList" column="photo_id" javaType="ArrayList"
                     ofType="com.fworldcodez.wzool.pojo.ZoolPhotos">
-            <id column="photo_id" property="photoId" jdbcType="INTEGER" />
-            <result column="photos" property="photos" jdbcType="VARCHAR" />
+            <id column="photo_id" property="photoId" jdbcType="INTEGER"/>
+            <result column="photos" property="photos" jdbcType="VARCHAR"/>
         </collection>
-        <collection property="otherId"  column="otherId" javaType="INTEGER">
-            <result column="other_id" jdbcType="INTEGER" property="otherId" />
+        <collection property="otherId" column="otherId" javaType="INTEGER">
+            <result column="other_id" jdbcType="INTEGER" property="otherId"/>
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
@@ -48,12 +48,12 @@
         LEFT JOIN cards c ON c.zool_id=z.zool_id
         LEFT JOIN zool_photos p ON p.zool_id=z.zool_id
         <if test="userId !=null">
-        LEFT JOIN user_collection u ON u.other_id=z.zool_id
+            LEFT JOIN user_collection u ON u.other_id=z.zool_id
             and u.user_id=#{userId,jdbcType=INTEGER}
         </if>
         where 1=1
         <if test="zoolName !=null">
-           AND  zool_name LIKE %${zoolName}%
+            AND zool_name LIKE %${zoolName}%
         </if>
         <if test="pageNow !=null and pageNumber !=null and pageNow !='' and pageNumber !=''">
             limit ${(pageNow-1)*pageNumber},${pageNumber}
@@ -66,7 +66,19 @@
         from zools z
         where 1=1
         <if test="zoolName !=null">
-            zool_name LIKE %${zoolName}%,
+            z.zool_name LIKE %${zoolName}%,
+        </if>
+    </select>
+    <!--查找动物园详细信息-->
+    <select id="selectZoolInfo" resultType="Integer" parameterType="java.lang.String">
+        select
+        z.*,
+        p.photos
+        from zools z
+        LEFT JOIN zool_photos p ON p.zool_id=z.zool_id
+        where 1=1
+        <if test="id !=null">
+            z.zool_id=${id}
         </if>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

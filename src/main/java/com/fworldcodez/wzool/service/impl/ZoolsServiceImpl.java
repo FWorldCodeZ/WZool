@@ -44,4 +44,10 @@ public class ZoolsServiceImpl implements ZoolsService {
 
         return jsonResult;
     }
+
+    @Transactional
+    @Override
+    public JsonResult selectZoolInfo(Integer id) {
+        return null;
+    }
 }

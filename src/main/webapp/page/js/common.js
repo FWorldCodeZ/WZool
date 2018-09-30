@@ -45,7 +45,7 @@ function commonAjax(obj, path, data, type, show) {
         },
         error: function (data) {
             // layer.closeAll();
-            // layer.msg(data.msg, {icon: 5, time: 1000});
+          // layer.msg(data.msg, {icon: 5, time: 1000});
         }
     }
     return $.ajax(option);
@@ -103,7 +103,7 @@ function page_tool(page_now, page_number, info_total, cardInfos) {
 
 
         html += '                            <div class="layui-icon layui-icon-share icon_style" title="分享"></div>\n' +
-            '                            <div class="layui-icon layui-icon-more-vertical icon_style" title="详情" onclick="test"></div>\n' +
+            '                            <a href="../html/zoolInfo.html/'+zoolID+'"> <div class="layui-icon layui-icon-more-vertical icon_style" title="详情" onclick="test"></div></a>\n' +
             '                        </div>\n' +
             '                        <fieldset class="show_line">\n' +
             '                            <legend>' + cardInfos[i].zoolName + '</legend>\n' +

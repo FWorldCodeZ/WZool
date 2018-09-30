@@ -2,6 +2,7 @@ package com.fworldcodez.wzool.config;
 
 
 import com.fworldcodez.wzool.excrption.myExceptionHandler;
+import com.fworldcodez.wzool.filter.FilterChainDefinitionMapStyle;
 import com.fworldcodez.wzool.shiro.ShiroRealm;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -109,6 +110,8 @@ public FilterRegistrationBean<DelegatingFilterProxy> delegatingFilterProxy(){
         filterChainDefinitionMap.put("/collection", "authc");// 这里为了测试，只限制/collection，实际开发中请修改为具体拦截的请求规则
         // filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        Map<String, String> filter=FilterChainDefinitionMapStyle.filterChainDefinitionMap();//自定义拦截规则
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filter);
         return shiroFilterFactoryBean;
     }
 

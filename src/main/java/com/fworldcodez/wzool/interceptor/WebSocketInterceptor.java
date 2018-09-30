@@ -25,8 +25,8 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
 //            System.out.println(parameterMap);
             if (session != null) {
                 logger.info("发送消息");
-//使用userName区分WebSocketHandler，以便定向发送消息
-//                String userName = (String) session.getAttribute(Constants.SESSION_USERNAME);
+              //使用userName区分WebSocketHandler，以便定向发送消息
+              // String userName = (String) session.getAttribute(Constants.SESSION_USERNAME);
               //  map.put("userId", session.getAttribute("userId"));
             }
 

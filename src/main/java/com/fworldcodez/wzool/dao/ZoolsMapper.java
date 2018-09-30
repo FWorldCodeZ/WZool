@@ -16,12 +16,20 @@ public interface ZoolsMapper {
     int updateByPrimaryKeySelective(Zools record);
 
     int updateByPrimaryKey(Zools record);
+
     /**
-     * 分页查找所有的动物园*/
+     * 分页查找所有的动物园
+     */
     List<Zools> selectOfCondition(Zools zools);
+
     /**
      * 查找总数
-     * */
+     */
     int selectCount(Zools zools);
+
+    /**
+     * 动物园详细信息
+     */
+    Zools selectZoolInfo(Integer id);
 
 }

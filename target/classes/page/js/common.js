@@ -103,7 +103,7 @@ function page_tool(page_now, page_number, info_total, cardInfos) {
 
 
         html += '                            <div class="layui-icon layui-icon-share icon_style" title="分享"></div>\n' +
-            '                            <div class="layui-icon layui-icon-more-vertical icon_style" title="详情" onclick="test"></div>\n' +
+            '                            <a href="../html/zoolInfo.html/'+zoolID+'"> <div class="layui-icon layui-icon-more-vertical icon_style" title="详情" onclick="test"></div></a>\n' +
             '                        </div>\n' +
             '                        <fieldset class="show_line">\n' +
             '                            <legend>' + cardInfos[i].zoolName + '</legend>\n' +
@@ -171,5 +171,4 @@ function page_next(page_now) {
     }
     layer.msg("已经是最后一页了！")
     return page_now;
-
 }

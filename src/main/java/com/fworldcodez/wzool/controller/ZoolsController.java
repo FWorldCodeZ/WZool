@@ -48,4 +48,16 @@ public class ZoolsController {
         return jsonResult;
     }
 
+
+    /**
+     * 动物园详细信息
+     */
+    @ResponseBody
+    @RequestMapping("/zoolInfo")
+    public JsonResult selectZoolInfo(@RequestBody Integer id, HttpSession session) {
+        JsonResult jsonResult = new JsonResult();
+
+        return jsonResult;
+    }
+
 }
